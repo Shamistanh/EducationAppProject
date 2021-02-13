@@ -6,6 +6,6 @@ Currently, mail sender and simple login have been implemented using java spring.
 
 Current endpoints:
 
-/verify
-/register
-/login
+>/verify
+>/register
+>/login
