@@ -1,0 +1,10 @@
+spring:
+  main:
+    banner-mode: off
+
+
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
