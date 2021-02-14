@@ -16,9 +16,8 @@
 		<version>2.4.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.sdp</groupId>
-	<artifactId>EducationAppProject</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+
+
 	<name>EducationAppProject</name>
 	<description>Education App with Spring</description>
 	<properties>
@@ -67,6 +66,14 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 			<version>2.3.4.RELEASE</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>5.4.4</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

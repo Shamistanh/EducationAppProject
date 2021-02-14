@@ -20,11 +20,11 @@ public class JavaMailSender  {
 
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("shamistan1999@gmail.com", "Sh7513244");
+                return new PasswordAuthentication(System.getenv("COMPANY_EMAIL"), System.getenv("COMPANY_EMAIL_PASSWORD"));
             }
         });
         Message msg = new MimeMessage(session);
-        msg.setFrom(new InternetAddress("shamistan1999@gmail.com", "EducationApp"));
+        msg.setFrom(new InternetAddress(System.getenv("COMPANY_EMAIL"), "EducationApp"));
         msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mailTo));
         msg.setSubject(mailSubject);
         msg.setSentDate(new Date());
@@ -33,6 +33,7 @@ public class JavaMailSender  {
         MimeBodyPart messageBodyPart = new MimeBodyPart();
 
         messageBodyPart.setContent(mailContent, "text/html");
+
 
         Multipart multipart = new MimeMultipart();
          multipart.addBodyPart(messageBodyPart);

@@ -4,6 +4,7 @@ import com.sdp.EducationAppProject.models.XUser;
 import com.sdp.EducationAppProject.repositories.UserRepo;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -17,9 +18,9 @@ public class LoginService {
 
     public String otpGenerator(){
         StringBuilder sb = new StringBuilder();
-        String alpha = "1B245DD840UM12QW00@yE";
+        String alpha = "1298345623789";
         Random random = new Random();
-        int i=0;
+        int i;
         for(i=0;i<alpha.length();i++){
             sb.append(alpha.charAt(random.nextInt(alpha.length())));
 
@@ -46,4 +47,14 @@ public class LoginService {
        return false;
     }
 
+    public List<XUser> getAllUsers() {
+        return userRepo.findAll();
+    }
+
+    public void verifyUserByEmail(String email) {
+        XUser userByEmail = getUserByEmail(email);
+        userByEmail.setIsVerified(true);
+        userRepo.deleteByEmail(email);
+        saveToDB(userByEmail);
+    }
 }

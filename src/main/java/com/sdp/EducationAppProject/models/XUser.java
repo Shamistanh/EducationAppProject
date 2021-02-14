@@ -18,7 +18,7 @@ import javax.persistence.*;
 public class XUser {
 
     @Id
-   // @GeneratedValue(strategy = GenerationType.IDENTITY)
+   //@GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
     @Column(name = "usr_id")
     String id;
 
