@@ -37,7 +37,12 @@ public class LoginController {
     @PostMapping("register")
     public String registration(@RequestParam String fullName, @RequestParam String email, @RequestParam String password, @RequestParam Boolean isTeacher) throws IOException, MessagingException {
         OTP = loginService.otpGenerator();
-        javaMailSender.sendmail(email, "Mail Confirmation", OTP);
+        try{
+            javaMailSender.sendmail(email, "Mail Confirmation", OTP);
+        }catch (Exception ex){
+            log.error("Not possible to send email");
+        }
+
         loginService.saveToDB(XUser.builder()
                 .id(UUID.randomUUID().toString())
                 .email(email)
