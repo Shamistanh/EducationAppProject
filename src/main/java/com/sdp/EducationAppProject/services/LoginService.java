@@ -1,6 +1,6 @@
 package com.sdp.EducationAppProject.services;
 
-import com.sdp.EducationAppProject.models.XUser;
+import com.sdp.EducationAppProject.models.MUser;
 import com.sdp.EducationAppProject.repositories.UserRepo;
 import org.springframework.stereotype.Service;
 
@@ -28,12 +28,12 @@ public class LoginService {
         return sb.toString();
     }
 
-    public void saveToDB(XUser XUser){
+    public void saveToDB(MUser XUser){
         userRepo.save(XUser);
     }
 
-    public XUser getUserByEmail(String email){
-        Optional<XUser> userByEmail = userRepo.findByEmail(email);
+    public MUser getUserByEmail(String email){
+        Optional<MUser> userByEmail = userRepo.findByEmail(email);
         return userByEmail.orElse(null);
     }
 
@@ -47,14 +47,14 @@ public class LoginService {
        return false;
     }
 
-    public List<XUser> getAllUsers() {
+    public List<MUser> getAllUsers() {
         return userRepo.findAll();
     }
 
-    public void verifyUserByEmail(String email) {
-        XUser userByEmail = getUserByEmail(email);
-        userByEmail.setIsVerified(true);
-        userRepo.deleteByEmail(email);
-        saveToDB(userByEmail);
-    }
+//    public void verifyUserByEmail(String email) {
+//        MUser userByEmail = getUserByEmail(email);
+//        userByEmail.setIsVerified(true);
+//        userRepo.deleteByEmail(email);
+//        saveToDB(userByEmail);
+//    }
 }
