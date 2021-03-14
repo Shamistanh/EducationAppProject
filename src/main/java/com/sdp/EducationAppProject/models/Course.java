@@ -22,7 +22,10 @@ public class Course {
 
     @Id
     @Column(name = "crs_id")
-    private  String id;
+    private  String crsId;
+
+    @Column(name = "usr_id")
+    private  String usrId;
 
     @Column(name = "email")
     @Email
@@ -31,29 +34,22 @@ public class Course {
     @Column(name = "created_date")
     private Date createdDate;
 
-    @Column(name = "content_documents")
-    @Lob
-    private List<byte []> contentDocuments;
 
-    @Column(name = "content_links")
-    @Lob
-    private List<String> contentLinks;
-
-    @ManyToOne
-    @JoinTable(name = "author",
-            joinColumns = { @JoinColumn(
-                    name = "crs_id",
-                    referencedColumnName = "crs_id"
-            ) },
-            inverseJoinColumns = { @JoinColumn(
-                    name = "user_id",
-                    referencedColumnName = "usr_id"
-            ) }
-    )
-    private MUser author;
+//    @ManyToOne
+//    @JoinTable(name = "author",
+//            joinColumns = { @JoinColumn(
+//                    name = "crs_id",
+//                    referencedColumnName = "crs_id"
+//            ) },
+//            inverseJoinColumns = { @JoinColumn(
+//                    name = "user_id",
+//                    referencedColumnName = "usr_id"
+//            ) }
+//    )
+//    private MUser author;
 
     @ManyToMany(fetch = FetchType.EAGER, targetEntity = MUser.class)
-    @JoinTable(name = "learners",
+    @JoinTable(name = "crs_usr",
             joinColumns = { @JoinColumn(
                     name = "crs_id",
                     referencedColumnName = "crs_id"
@@ -63,7 +59,7 @@ public class Course {
                     referencedColumnName = "usr_id"
             ) }
     )
-    private List<MUser> learners;
+    private List<MUser> users;
 
 
 

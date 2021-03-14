@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
@@ -43,11 +46,8 @@ public class MUser {
     @Column(name = "isTeacher")
     Boolean isTeacher;
 
-    @OneToMany(mappedBy = "author")
-    private List<Course> courses;
 
-
-    @ManyToMany(mappedBy = "learners", fetch = FetchType.EAGER, targetEntity = Course.class)
+    @ManyToMany(mappedBy = "users", targetEntity = Course.class)
     private List<Course> enrolledCourses;
 
     @ManyToMany(fetch = FetchType.EAGER)

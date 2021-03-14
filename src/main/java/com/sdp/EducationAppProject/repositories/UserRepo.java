@@ -16,6 +16,8 @@ public interface UserRepo extends JpaRepository<MUser, Integer> {
    Optional<MUser> findByEmail(String email);
    void deleteByEmail(String email);
 
+   Optional<MUser> findByUsername(String username);
+
    @Override
    Page<MUser> findAll(Pageable pageable);
 }

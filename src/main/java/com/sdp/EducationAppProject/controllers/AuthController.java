@@ -12,6 +12,7 @@ import com.sdp.EducationAppProject.repositories.RoleRepository;
 import com.sdp.EducationAppProject.repositories.UserRepository;
 import com.sdp.EducationAppProject.security.JwtUtils;
 import com.sdp.EducationAppProject.security.UserDetailsImpl;
+import com.sdp.EducationAppProject.services.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -37,6 +38,9 @@ public class AuthController {
     UserRepository userRepository;
 
     @Autowired
+    LoginService loginService;
+
+    @Autowired
     RoleRepository roleRepository;
 
     @Autowired
@@ -47,18 +51,18 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid LoginRequest loginRequest) {
-        System.out.println("signine bu gelir "+ loginRequest);
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-        System.out.println("authenti burdadi "+authentication);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        System.out.println("user details burdadir "+ userDetails);
+
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
+
+        loginService.saveSessionInfoToDb( userDetails.getId(),loginRequest.getUsername(),jwt, roles);
 
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
@@ -106,10 +110,10 @@ public class AuthController {
                         roles.add(new Role(UUID.randomUUID().toString(),ERole.ROLE_ADMIN));
 
                         break;
-                    case "mod":
+                    case "instructor":
 //                        Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
 //                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(new Role(UUID.randomUUID().toString(),ERole.ROLE_MODERATOR));
+                        roles.add(new Role(UUID.randomUUID().toString(),ERole.ROLE_INSTRUCTOR));
 
                         break;
                     default:
